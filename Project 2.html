@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Project 2</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            background-color: #e6f2ff; 
+        }
+        header {
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            background-color: #005f73; 
+            color: white;
+            padding: 10px 20px;
+            width: 100%;
+        }
+        .content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+        }
+        .slider {
+            position: relative;
+            width: 70%;
+            max-width: 600px;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #ffffff; 
+        }
+        .slides {
+            display: flex;
+            width: 300%;
+            transition: transform 0.5s ease-in-out;
+        }
+        .slides img {
+            width: 100%;
+            flex: 0 0 100%;
+            display: block;
+            margin: auto;
+        }
+        .caption {
+            margin-top: 10px;
+            font-size: 18px;
+            color: #333;
+            text-align: center;
+        }
+        .prev, .next {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 5px;
+        }
+        .prev { left: 10px; }
+        .next { right: 10px; }
+        .thumbnails {
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+        }
+        .thumbnails img {
+            width: 60px;
+            margin: 5px;
+            cursor: pointer;
+            opacity: 0.6;
+            border-radius: 5px;
+        }
+        .thumbnails img.active {
+            opacity: 1;
+            border: 2px solid #333;
+        }
+        footer {
+            font-size: 18px;
+            text-align: center;
+            background-color: #005f73; 
+            color: white;
+            padding: 10px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <header>Nature Scenery</header>
+    <div class="content">
+        <div class="slider">
+            <div class="slides">
+                <img src="1.jpg">
+                <img src="2.jpg">
+                <img src="3.jpg">
+            </div>
+            <button class="prev" onclick="prevSlide()">&#10094;</button>
+            <button class="next" onclick="nextSlide()">&#10095;</button>
+        </div>
+        <div class="caption">Beautiful Scenery</div>
+        <div class="thumbnails">
+            <img src="1.jpg" onclick="showSlide(0)" class="active">
+            <img src="2.jpg" onclick="showSlide(1)">
+            <img src="3.jpg" onclick="showSlide(2)">
+        </div>
+    </div>
+    <footer>&copy; 2025 All Rights Reserved.</footer>
+    <script>
+        let index = 0;
+        const slides = document.querySelector(".slides");
+        const slideImages = document.querySelectorAll(".slides img");
+        const thumbnails = document.querySelectorAll(".thumbnails img");
+        const caption = document.querySelector(".caption");
+        const captions = ["Forest", "Forest Path", "Green Forest"];
+        const totalSlides = slideImages.length;
+
+        function showSlide(n) {
+            if (n >= totalSlides) index = 0;
+            else if (n < 0) index = totalSlides - 1;
+            else index = n;
+            slides.style.transform = `translateX(-${index * 100}%)`;
+            thumbnails.forEach(thumb => thumb.classList.remove("active"));
+            thumbnails[index].classList.add("active");
+            caption.textContent = captions[index];
+        }
+
+        function nextSlide() { showSlide(index + 1); }
+        function prevSlide() { showSlide(index - 1); }
+        
+        thumbnails.forEach((thumb, i) => {
+            thumb.addEventListener("click", () => showSlide(i));
+        });
+    </script>
+</body>
+</html>
